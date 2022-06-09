@@ -2,33 +2,26 @@
 
 <template>
   <div>
-    <nav class="flex">
-      <router-link :to="{ name: 'home' }">
-        <div class="nav-link">Home</div>
-      </router-link>
-      <router-link :to="{ name: 'events' }">
-        <div class="nav-link">Events Dashboard</div>
-      </router-link>
-      <router-link :to="{ name: 'create' }">
-        <div class="nav-link">Create new Event</div>
-      </router-link>
-    </nav>
-    <router-view></router-view>
+    <HeaderComponent></HeaderComponent>
+    <div class="max-w-7xl mx-auto">
+      <router-view></router-view>
+    </div>
+
   </div>
 
 </template>
 
 
 <script>
+import HeaderComponent from "./components/HeaderComponent.vue";
 export default {
-
+  components: {
+    HeaderComponent
+  }
 }
 
 </script>
 
 
 <style>
-.nav-link {
-  @apply p-2 text-red-800 text-xl font-bold
-}
 </style>

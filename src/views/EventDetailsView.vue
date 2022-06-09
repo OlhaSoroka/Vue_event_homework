@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>{{ $route.params.id }}</h1>
-    <div>{{ currentEvent }}</div>
+  <div v-if="currentEvent" class="border-2 border-teal-600 h-96 rounded-lg shadow-2xl m-2">
+<div class="event-title">{{currentEvent.title}}</div>
   </div>
 </template>
 
@@ -9,7 +8,8 @@
 import db from '../assets/db.json';
 export default {
   props: {
-    id: String
+    id: String,
+
   },
   mounted() {
     this.currentEvent = db.events.find((elem) => {

@@ -1,5 +1,5 @@
 <template>
-  <h1>Events page</h1>
+  <h1 class="font-bold text-4xl text-neutral-800 mt-10 px-20 py-10 text-center"> Best events in your location</h1>
   <div v-if="$route.name === 'event-details'">
     <router-view></router-view>
     <button class="bg-pink-500 text-white fond-bold p-2" @click="back">Back</button>
