@@ -15,7 +15,7 @@
      <h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
 <div class="event-wrapper">
   		<EventCardComponentVue
-			v-for="(event, index) in events"
+			v-for="(event, index) in $store.getters.getEventsList"
 			:key="index"
 			:event="event"
 			@openEventDetails="onEventSelect($event)"
@@ -26,19 +26,10 @@
 </template>
 
 <script>
-import db from '../assets/db.json';
 import EventCardComponentVue from '../components/EventCardComponent.vue';
 export default {
 	components: {
 		EventCardComponentVue,
-	},
-	mounted() {
-		this.events = db.events;
-	},
-	data() {
-		return {
-			events: [],
-		};
 	},
 	methods: {
 		onEventSelect(id) {
