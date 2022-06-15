@@ -11,21 +11,22 @@
 		</div>
 	</div>
 	<div v-else>
-   <div >
-     <h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
-<div class="event-wrapper">
-  		<EventCardComponentVue
-			v-for="(event, index) in $store.getters.getEventsList"
-			:key="index"
-			:event="event"
-			@openEventDetails="onEventSelect($event)"
-		></EventCardComponentVue>
-</div>
-   </div>
+		<div>
+			<h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
+			<div class="event-wrapper">
+				<EventCardComponentVue
+					v-for="(event, index) in getEventsList"
+					:key="index"
+					:event="event"
+					@openEventDetails="onEventSelect($event)"
+				></EventCardComponentVue>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventCardComponentVue from '../components/EventCardComponent.vue';
 export default {
 	components: {
@@ -39,6 +40,9 @@ export default {
 		back() {
 			this.$router.back();
 		},
+	},
+	computed: {
+		...mapGetters('events', ['getEventsList']),
 	},
 };
 </script>
