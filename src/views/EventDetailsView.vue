@@ -20,9 +20,9 @@ export default {
 		id: String,
 	},
 	computed: {
-		...mapGetters('events', ['getCurrentEvent']),
+		...mapGetters('events', ['currentEvent']),
 		currentEvent() {
-			return this.getCurrentEvent(this.id);
+			return this.currentEvent(this.id);
 		},
 		attendees() {
 			return this.currentEvent && this.currentEvent.attendees.map((member) => member.name).join(', ');

@@ -15,7 +15,7 @@
 			<h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
 			<div class="event-wrapper">
 				<EventCardComponentVue
-					v-for="(event, index) in getEventsList"
+					v-for="(event, index) in eventsList"
 					:key="index"
 					:event="event"
 					@openEventDetails="onEventSelect($event)"
@@ -42,7 +42,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters('events', ['getEventsList']),
+		...mapGetters('events', ['eventsList']),
 	},
 };
 </script>

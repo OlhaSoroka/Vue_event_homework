@@ -5,8 +5,8 @@ export default {
 		events: db.events,
 	},
 	getters: {
-		getEventsList: (state) => state.events,
-		getCurrentEvent: (state) => (id) => state.events.find((event) => +event.id === +id),
+		eventsList: (state) => state.events,
+		currentEvent: (state) => (id) => state.events.find((event) => +event.id === +id),
 	},
 	actions: {
 		addNewEvent(ctx, event) {
