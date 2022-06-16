@@ -11,34 +11,26 @@
 		</div>
 	</div>
 	<div v-else>
-   <div >
-     <h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
-<div class="event-wrapper">
-  		<EventCardComponentVue
-			v-for="(event, index) in events"
-			:key="index"
-			:event="event"
-			@openEventDetails="onEventSelect($event)"
-		></EventCardComponentVue>
-</div>
-   </div>
+		<div>
+			<h1 class="font-bold text-4xl text-green-900 mt-10 px-20 py-10 text-center">Best events in your location</h1>
+			<div class="event-wrapper">
+				<EventCardComponentVue
+					v-for="(event, index) in eventsList"
+					:key="index"
+					:event="event"
+					@openEventDetails="onEventSelect($event)"
+				></EventCardComponentVue>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import db from '../assets/db.json';
+import { mapGetters } from 'vuex';
 import EventCardComponentVue from '../components/EventCardComponent.vue';
 export default {
 	components: {
 		EventCardComponentVue,
-	},
-	mounted() {
-		this.events = db.events;
-	},
-	data() {
-		return {
-			events: [],
-		};
 	},
 	methods: {
 		onEventSelect(id) {
@@ -48,6 +40,9 @@ export default {
 		back() {
 			this.$router.back();
 		},
+	},
+	computed: {
+		...mapGetters('events', ['eventsList']),
 	},
 };
 </script>
