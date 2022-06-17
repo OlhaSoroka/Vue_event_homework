@@ -1,10 +1,16 @@
+import axios from './axios';
+
 export default {
 	state: {
 		events: [],
+		total:0,
+		isLoading: false,
 	},
 	getters: {
 		eventsList: (state) => state.events,
 		currentEvent: (state) => (id) => state.events.find((event) => +event.id === +id),
+		isLoading: (state) => state.isLoading,
+		totalEvents:(state) => +state.total,
 	},
 	actions: {
 		addNewEvent(store, event) {
@@ -16,10 +22,13 @@ export default {
 		deleteEvent(store, id) {
 			store.commit('DELETE_EVENT', id);
 		},
-		fetchEventsList(store) {
-			fetch('http://localhost:3004/events')
-				.then((json) => json.json())
-				.then((events) => store.commit('SET_EVENTS_LIST', events));
+		async fetchEventsList(store,pagination) {
+			store.commit('TOGGLE_LOADING', true);
+			const response = await axios.get(`events?_limit=${pagination.perPage}&_page=${pagination.page}`);
+			store.commit('SET_TOTAL',response.headers['x-total-count'])
+			store.commit('SET_EVENTS_LIST', response.data);
+			store.commit('TOGGLE_LOADING', false);
+			
 		},
 	},
 	mutations: {
@@ -32,6 +41,12 @@ export default {
 		},
 		SET_EVENTS_LIST(state, events) {
 			state.events = events;
+		},
+		TOGGLE_LOADING(state, loading) {
+			state.isLoading = loading;
+		},
+		SET_TOTAL(state,total){
+			state.total=total
 		},
 	},
 	namespaced: true,
