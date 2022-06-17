@@ -26,13 +26,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import EventCardComponentVue from '../components/EventCardComponent.vue';
 export default {
+	mounted() {
+		this.fetchEventsList();
+	},
 	components: {
 		EventCardComponentVue,
 	},
 	methods: {
+		...mapActions('events',['fetchEventsList']),
 		onEventSelect(id) {
 			this.$router.push({ name: 'event-details', params: { id } });
 			this.isEventSelected = true;
