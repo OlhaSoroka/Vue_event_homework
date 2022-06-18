@@ -231,6 +231,17 @@
       "date": "",
       "time": "5:00",
       "attendees": []
+    },
+    {
+      "id": 11,
+      "title": "Independance Dy",
+      "date": "24.08.2022",
+      "time": "12.00",
+      "location": "Runk Square",
+      "description": "Celebration Independance of Ukraine",
+      "organizer": "Sadovyi A.I.",
+      "category": "National holiday",
+      "attendees": []
     }
   ]
 }

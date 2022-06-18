@@ -33,7 +33,6 @@ export default {
 				{ label: 'Event category', model: 'category' },
 			],
 			eventForm: {
-				id: null,
 				title: '',
 				date: '',
 				time: '',

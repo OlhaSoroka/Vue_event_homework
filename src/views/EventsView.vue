@@ -1,5 +1,5 @@
 <template>
-	<template v-if="isLoading"><div class="font-bold text-black">Events is loading...</div></template>
+	<template v-if="isLoading"><div class="w-full mt-60 flex justify-center"><SpinnerComponent></SpinnerComponent></div></template>
 	<template v-else>
 		<div v-if="$route.name === 'event-details'">
 			<router-view></router-view>
@@ -47,6 +47,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import EventCardComponentVue from '../components/EventCardComponent.vue';
+import SpinnerComponent from '../components/SpinnerComponent.vue';
 export default {
 	mounted() {
 		const defaultPagination = {
@@ -62,8 +63,9 @@ export default {
 		};
 	},
 	components: {
-		EventCardComponentVue,
-	},
+    EventCardComponentVue,
+    SpinnerComponent
+},
 	methods: {
 		...mapActions('events', ['fetchEventsList']),
 		onEventSelect(id) {
@@ -97,7 +99,7 @@ export default {
 			return this.page === this.lastPage;
 		},
 		lastPage() {
-			Math.ceil(this.totalEvents / this.perPage);
+			return Math.ceil(this.totalEvents / this.perPage);
 		},
 	},
 };
