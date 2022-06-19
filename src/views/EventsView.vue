@@ -1,5 +1,7 @@
 <template>
-	<template v-if="isLoading"><div class="w-full mt-60 flex justify-center"><SpinnerComponent></SpinnerComponent></div></template>
+	<template v-if="isEventsLoading"
+		><div class="w-full mt-60 flex justify-center"><SpinnerComponent></SpinnerComponent></div
+	></template>
 	<template v-else>
 		<div v-if="$route.name === 'event-details'">
 			<router-view></router-view>
@@ -63,9 +65,9 @@ export default {
 		};
 	},
 	components: {
-    EventCardComponentVue,
-    SpinnerComponent
-},
+		EventCardComponentVue,
+		SpinnerComponent,
+	},
 	methods: {
 		...mapActions('events', ['fetchEventsList']),
 		onEventSelect(id) {
@@ -73,7 +75,7 @@ export default {
 			this.isEventSelected = true;
 		},
 		back() {
-			this.$router.back();
+			this.$router.push({ name: 'events' });
 		},
 		nextPage() {
 			this.page += 1;
@@ -91,7 +93,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters('events', ['eventsList', 'isLoading', 'totalEvents']),
+		...mapGetters('events', ['eventsList', 'isEventsLoading', 'totalEvents']),
 		isPrevPageDisabled() {
 			return this.page === 1;
 		},

@@ -1,11 +1,11 @@
 <template>
 	<div class="card-container">
 		<div class="event-id">{{ '#' + event.id }}</div>
-		<div class="event-title">{{event.title }}</div>
-		<div class="event-description"><span class="subheader">What we will do: </span>{{event.description || ' -- ' }}</div>
-		<div class="event-location"><span class="subheader">Where: </span>{{event.location || ' -- '}}</div>
-		<div class="event-date"><span class="subheader">When: </span>{{ event.date || ' -- '}}</div>
-		<div class="event-buttons flex justify-center align-middle ">
+		<div class="event-title">{{ event.title }}</div>
+		<div class="event-description"><span class="subheader">What we will do: </span>{{ event.description || ' -- ' }}</div>
+		<div class="event-location"><span class="subheader">Where: </span>{{ event.location || ' -- ' }}</div>
+		<div class="event-date"><span class="subheader">When: </span>{{ event.date || ' -- ' }}</div>
+		<div class="event-buttons flex justify-center align-middle">
 			<button @click="openEventDetails">Details</button>
 			<button @click="deleteSelectedEvent" class="!bg-red-500">Delete</button>
 		</div>
