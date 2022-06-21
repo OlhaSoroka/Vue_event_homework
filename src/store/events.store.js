@@ -1,31 +1,62 @@
-import db from '../assets/db.json';
+import axios from './axios';
 
 export default {
 	state: {
-		events: db.events,
+		events: [],
+		total: 0,
+		isEventsLoading: false,
+		isDetailsLoading: false,
+		eventDetails: null,
 	},
 	getters: {
 		eventsList: (state) => state.events,
-		currentEvent: (state) => (id) => state.events.find((event) => +event.id === +id),
+		eventDetails: (state) => state.eventDetails,
+		isEventsLoading: (state) => state.isEventsLoading,
+		isDetailsLoading: (state) => state.isDetailsLoading,
+		totalEvents: (state) => +state.total,
 	},
 	actions: {
-		addNewEvent(ctx, event) {
-			const lastEventIndex = ctx.state.events.length - 1;
-			const newId = ctx.state.events[lastEventIndex].id + 1;
-			event.id = newId;
-			ctx.commit('ADD_EVENT', event);
+		async addNewEvent(store, event) {
+			await axios.post('events', event);
+			store.dispatch('fetchEventsList', { perPage: 3, page: 1 });
 		},
-		deleteEvent(ctx, id) {
-			ctx.commit('DELETE_EVENT', id);
+		async deleteEvent(store, id) {
+			await axios.delete(`events/${id}`);
+			store.dispatch('fetchEventsList', { perPage: 3, page: 1 });
+		},
+		async fetchEventsList(store, pagination) {
+			store.commit('TOGGLE_EVENTS_LOADING', true);
+			const response = await axios.get(`events?_limit=${pagination.perPage}&_page=${pagination.page}`);
+			store.commit('SET_TOTAL', response.headers['x-total-count']);
+			store.commit('SET_EVENTS_LIST', response.data);
+			store.commit('TOGGLE_EVENTS_LOADING', false);
+		},
+		async fetchEventDetails(store, id) {
+			store.commit('TOGGLE_DETAILS_LOADING', true);
+			const response = await axios.get(`events/${id}`);
+			store.commit('SET_EVENT_DETAILS', response.data);
+			store.commit('TOGGLE_DETAILS_LOADING', false);
+		},
+		async updateEventDetails(store, event) {
+			await axios.put(`events/${event.id}`, event);
+			store.dispatch('fetchEventDetails', event.id);
 		},
 	},
 	mutations: {
-		ADD_EVENT(state, event) {
-			state.events.push(event);
+		SET_EVENTS_LIST(state, events) {
+			state.events = events;
 		},
-		DELETE_EVENT(state, id) {
-			const eventIndex = state.events.findIndex((elem) => elem.id === id);
-			state.events.splice(eventIndex, 1);
+		TOGGLE_EVENTS_LOADING(state, loading) {
+			state.isEventsLoading = loading;
+		},
+		TOGGLE_DETAILS_LOADING(state, loading) {
+			state.isDetailsLoading = loading;
+		},
+		SET_TOTAL(state, total) {
+			state.total = total;
+		},
+		SET_EVENT_DETAILS(state, eventDetails) {
+			state.eventDetails = eventDetails;
 		},
 	},
 	namespaced: true,

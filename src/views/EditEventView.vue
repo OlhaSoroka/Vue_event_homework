@@ -1,6 +1,6 @@
 <template>
 	<div class="form-wrapper">
-		<h1 class="header">Create your event</h1>
+		<h1 class="header">Edit event</h1>
 		<form class="flex flex-col w-full p-6">
 			<div v-for="(input, index) in formInputs" :key="index" class="input-item-wrapper">
 				<h2 class="w-1/5 font-bold text-green-900">{{ input.label }}:</h2>
@@ -9,18 +9,25 @@
 		</form>
 		<div class="flex justify-center align-middle">
 			<button
-				@click="createEvent"
+				@click="update"
 				class="py-2 px-6 m-2 w-52 text-white text-xl font-bold border-2 border-white rounded-xl bg-emerald-600 transition-colors hover:bg-emerald-800"
 			>
-				Create event
+				Update
 			</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
+	mounted() {
+		if (this.eventDetails) {
+			this.eventForm = this.eventDetails;
+		} else {
+			this.$router.push({ name: 'events' });
+		}
+	},
 	data() {
 		return {
 			formInputs: [
@@ -45,11 +52,14 @@ export default {
 		};
 	},
 	methods: {
-		...mapActions('events', ['addNewEvent']),
-		createEvent() {
-			this.addNewEvent(this.eventForm);
-			this.$router.push({ name: 'events' });
+		...mapActions('events', ['updateEventDetails']),
+		update() {
+			this.updateEventDetails(this.eventForm);
+			this.$router.push({ name: 'event-details', params: { id: this.eventForm.id } });
 		},
+	},
+	computed: {
+		...mapGetters('events', ['eventDetails']),
 	},
 };
 </script>
